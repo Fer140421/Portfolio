@@ -1,0 +1,217 @@
+---
+// src/components/Projects.astro
+import GitHubIcon from "./icons/GitHub.astro";
+import LinkIcon from "./icons/Link.astro";
+
+const projects = [
+  {
+    title: "Sistema Web Importadora Falumar",
+    description: "Sistema de gestión web con tienda en línea, control de inventario, ventas y roles de usuario. Integración de flujos de venta con pre-ventas, apertura/cierre de caja, emisión de notas de venta y escaneo de código de barras. Sistema desplegado y en producción.",
+    stack: ["Angular 18", "Spring Boot", "PostgreSQL", "JWT", "Bootstrap"],
+    period: "Feb – Ago 2025",
+    type: "Profesional",
+    github: "#",
+    demo: "https://falumar.online/store/home",
+  },
+  {
+    title: "Página Web Sabor a Vino",
+    description: "Sitio web desarrollado para la agencia de vinos ficticia 'Sabor a Vino' como proyecto de emprendimiento universitario. Diseño visual atractivo con HTML, CSS y JavaScript puro.",
+    stack: ["HTML", "CSS", "JavaScript", "Bootstrap"],
+    period: "Ago 2024",
+    type: "Profesional",
+    github: "#",
+    demo: "https://sabor-a-vino.vercel.app/",
+  },
+  {
+  title: "Tienda Online Ropa Urbana",
+  description: "Catálogo en línea para emprendimiento de ropa urbana, tienda funcional con visualización de productos, desarrollada como solución digital para el negocio.",
+  stack: ["Angular 20", "Firebase"],
+  period: "2025",
+  type: "Profesional",
+  github: "#",
+  demo: "https://hypezone.vercel.app/home",
+},
+{
+  title: "Invitación Web Cumpleaños Minnie",
+  description: "Invitación digital para cumpleaños de 3 años con temática de Minnie Mouse, sitio estático animado y responsive, entregado como proyecto freelance.",
+  stack: ["Astro", "Tailwind CSS"],
+  period: "2025",
+  type: "Profesional",
+  github: "#",
+  demo: "https://invitacion-geraldi.vercel.app/",
+},
+  {
+    title: "Sistema ERP Urban Signs",
+    description: "Sistema web de categoría ERP para empresa de industria gráfica. Automatización de gestión de pedidos, control de inventarios, activos, cronograma de producción, facturación electrónica y seguimiento de proyectos. Arquitectura backend en capas con principios SOLID.",
+    stack: ["Angular 18", "Spring Boot", "PostgreSQL", "Tailwind CSS", "JWT"],
+    period: "Mar 2025 – Mar 2026",
+    type: "Proyecto de Grado",
+    github: "#",
+    demo: "#",
+  },
+  {
+    title: "Sistema Web MediCam",
+    description: "Prototipo de sistema web orientado a profesionales del área médica, desarrollado en simulación laboral. Interfaces responsivas y componentes reutilizables con consumo de datos mediante JSON Server simulando una API REST.",
+    stack: ["Angular 17", "TypeScript", "Bootstrap", "JSON Server"],
+    period: "Ago – Sep 2024",
+    type: "Simulación Laboral",
+    github: "#",
+    demo: "#",
+  },
+  {
+    title: "Sistema Académico ETC Tarija",
+    description: "Sistema web académico para el Instituto ETC Tarija. Módulos para gestión académica, matriculación, registro de notas y control de pagos. Proyecto universitario de la materia Taller II.",
+    stack: ["Angular 18", "Spring Boot", "PostgreSQL", "TypeScript", "Bootstrap"],
+    period: "Feb – Dic 2024",
+    type: "Universitario",
+    github: "#",
+    demo: "#",
+  },
+  {
+    title: "App Móvil Cafetería",
+    description: "Aplicación móvil para una cafetería ficticia enfocada en la venta de desayunos. Desarrollo completo con frontend móvil, backend y base de datos en la nube.",
+    stack: ["Kotlin", "Nest.js", "Firebase"],
+    period: "Jun – Jul 2024",
+    type: "Universitario",
+    github: "#",
+    demo: "#",
+  },
+  {
+    title: "Pokedex App",
+    description: "Página web que muestra los distintos Pokémon consumiendo la API REST de PokéAPI. Proyecto personal para práctica de consumo de APIs externas y manejo de componentes.",
+    stack: ["Angular 18", "Bootstrap", "PokéAPI"],
+    period: "Ene 2025",
+    type: "Personal",
+    github: "#",
+    demo: "https://pokedex-pi-orcin.vercel.app/home",
+  },
+  {
+    title: "Sistema de Control de Activos",
+    description: "Sistema web para el control de activos de mantenimiento de una empresa ficticia. Primer proyecto full stack desarrollado como parte de la materia Taller I.",
+    stack: ["Angular 16", "Spring Boot", "PostgreSQL", "Bootstrap"],
+    period: "Sep – Dic 2023",
+    type: "Universitario",
+    github: "#",
+    demo: "#",
+  },
+  {
+  title: "Página Web Evolución del Desarrollo Web",
+  description: "Sitio web educativo colaborativo que muestra la evolución del desarrollo web desde los años 90 hasta la actualidad, desarrollado para la materia de inglés del Instituto de Idiomas ULI.",
+  stack: ["HTML", "CSS", "JavaScript"],
+  period: "Nov – Dic 2025",
+  type: "Colaborativo",
+  github: "#",
+  demo: "https://uliproject.vercel.app/",
+},
+];
+
+const typeBadgeColor: Record<string, string> = {
+  "Profesional":        "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
+  "Proyecto de Grado":  "text-purple-400  bg-purple-400/10  border-purple-400/20",
+  "Simulación Laboral": "text-yellow-400  bg-yellow-400/10  border-yellow-400/20",
+  "Universitario":      "text-blue-400    bg-blue-400/10    border-blue-400/20",
+  "Personal":           "text-electric-blue bg-electric-blue/10 border-electric-blue/20",
+};
+---
+
+<section class="py-20 lg:py-32" id="proyectos">
+  <div class="container mx-auto px-4">
+
+    <h2 class="text-3xl lg:text-4xl font-bold text-white mb-12 text-center">
+      <span id="projects-typewriter"></span><span id="projects-cursor" class="projects-cursor">▌</span>
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {projects.map(project => (
+        <div class="group relative flex flex-col h-full bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden transition-all duration-300 hover:border-electric-blue/50 hover:shadow-electric-glow hover:-translate-y-1">
+          <div class="p-6 flex-grow">
+
+            <!-- Tipo + período -->
+            <div class="flex items-center justify-between mb-3">
+              <span class={`text-xs font-semibold px-2 py-0.5 rounded-full border ${typeBadgeColor[project.type] ?? typeBadgeColor["Personal"]}`}>
+                {project.type}
+              </span>
+              <span class="text-xs text-gray-600">{project.period}</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-white mb-2 leading-tight">{project.title}</h3>
+            <p class="text-gray-400 text-sm mb-4">{project.description}</p>
+
+            <div class="flex flex-wrap gap-2">
+              {project.stack.map(tech => (
+                <span class="text-xs font-semibold text-electric-blue bg-electric-blue/10 px-2 py-1 rounded-full">{tech}</span>
+              ))}
+            </div>
+          </div>
+
+          <div class="p-6 pt-0 mt-auto flex items-center justify-end gap-4">
+            <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-300 hover:text-electric-blue">
+              <GitHubIcon class="w-6 h-6" />
+              <span class="sr-only">GitHub</span>
+            </a>
+            <a href={project.demo} target="_blank" rel="noopener noreferrer" class="text-gray-500 transition-colors duration-300 hover:text-electric-blue">
+              <LinkIcon class="w-6 h-6" />
+              <span class="sr-only">Demo</span>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes projects-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+  .projects-cursor {
+    display: inline-block;
+    color: #00bfff;
+    animation: projects-blink 0.75s step-end infinite;
+    font-weight: 300;
+    margin-left: 1px;
+    transition: opacity 0.4s ease;
+  }
+  .projects-cursor.done {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const TEXT       = "Proyectos Destacados";
+  const TYPE_SPEED = 90;
+
+  const el     = document.getElementById("projects-typewriter")!;
+  const cursor = document.getElementById("projects-cursor")!;
+  let typed    = false;
+
+  function typeTitle() {
+    if (typed) return;
+    typed = true;
+    let i = 0;
+    function step() {
+      if (i < TEXT.length) {
+        el.textContent = TEXT.slice(0, i + 1);
+        i++;
+        setTimeout(step, TYPE_SPEED);
+      } else {
+        setTimeout(() => cursor.classList.add("done"), 600);
+      }
+    }
+    step();
+  }
+
+  const section = document.getElementById("proyectos")!;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        typeTitle();
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.3 }
+  );
+  observer.observe(section);
+</script>

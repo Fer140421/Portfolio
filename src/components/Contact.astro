@@ -1,0 +1,107 @@
+---
+import GitHubIcon from "./icons/GitHub.astro";
+import LinkedInIcon from "./icons/LinkedIn.astro";
+import EmailIcon from "./icons/Email.astro";
+import WhatsAppIcon from "./icons/WhatsApp.astro";
+
+const contacts = [
+  { name: "GitHub", icon: GitHubIcon, url: "https://github.com/Fer140421" },
+  {
+    name: "LinkedIn",
+    icon: LinkedInIcon,
+    url: "https://www.linkedin.com/in/fernandocamata",
+  },
+  {
+    name: "Email",
+    icon: EmailIcon,
+    url: "mailto:fernando.camata.baspineiro@gmail.com",
+  },
+  { name: "WhatsApp", icon: WhatsAppIcon, url: "https://wa.me/59165807763" },
+];
+---
+
+<section class="py-20 lg:py-32" id="contacto">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl lg:text-4xl font-bold text-white mb-8">
+      <span id="contact-typewriter"></span><span
+        id="contact-cursor"
+        class="contact-cursor">▌</span
+      >
+    </h2>
+    <div class="flex items-center justify-center gap-8">
+      {
+        contacts.map((contact) => (
+          <a
+            href={contact.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-gray-500 transition-all duration-300 hover:text-electric-blue hover:scale-110"
+            aria-label={contact.name}
+          >
+            <contact.icon class="w-8 h-8 md:w-10 md:h-10" />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes contact-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  .contact-cursor {
+    display: inline-block;
+    color: #00bfff;
+    animation: contact-blink 0.75s step-end infinite;
+    font-weight: 300;
+    margin-left: 1px;
+    transition: opacity 0.4s ease;
+  }
+  .contact-cursor.done {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const TEXT = "Contacto";
+  const TYPE_SPEED = 90;
+  const el = document.getElementById("contact-typewriter")!;
+  const cursor = document.getElementById("contact-cursor")!;
+  let typed = false;
+
+  function typeTitle() {
+    if (typed) return;
+    typed = true;
+    let i = 0;
+    function step() {
+      if (i < TEXT.length) {
+        el.textContent = TEXT.slice(0, i + 1);
+        i++;
+        setTimeout(step, TYPE_SPEED);
+      } else {
+        setTimeout(() => cursor.classList.add("done"), 600);
+      }
+    }
+    step();
+  }
+
+  const section = document.getElementById("contacto")!;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        typeTitle();
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.3 },
+  );
+  observer.observe(section);
+</script>

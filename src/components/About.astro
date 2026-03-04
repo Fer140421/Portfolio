@@ -1,0 +1,188 @@
+---
+// src/components/About.astro
+---
+<section class="py-20 lg:py-32" id="sobre-mi">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <div class="text-center lg:text-left">
+        <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">
+          <span id="about-typewriter"></span><span
+            id="about-cursor"
+            class="about-cursor">▌</span
+          >
+        </h2>
+
+        <p class="text-gray-400 mb-4 leading-relaxed">
+          Soy Fernando, desarrollador Full Stack de Tarija, Bolivia. Estoy
+          terminando Ingeniería Informática en la UAJMS mientras trabajo en
+          proyectos reales — desde sistemas ERP para empresas locales hasta
+          tiendas online.
+        </p>
+        <p class="text-gray-400 mb-4 leading-relaxed">
+          Me muevo bien tanto en frontend como en backend, con Angular y Spring
+          Boot he construido sistemas que están en producción y siendo usados
+          por equipos reales, me gusta que el código sea limpio, que escale y
+          que resuelva problemas concretos.
+        </p>
+        <p class="text-gray-400 leading-relaxed">
+          Fuera del código, soy parte de la comunidad <span
+            class="text-white font-medium">GDG Tarija</span
+          >, donde he participado de talleres, colaborador como miembro en la organizacion de diferentes eventos y
+          colaborado con otros desarrolladores de la región.
+        </p>
+
+        <div class="mt-8 flex flex-wrap justify-center lg:justify-start gap-6">
+          <div class="text-center">
+            <p class="text-2xl font-black text-electric-blue">8+</p>
+            <p class="text-xs text-gray-500 mt-0.5">Proyectos</p>
+          </div>
+          <div class="w-px bg-gray-800 hidden sm:block"></div>
+          <div class="text-center">
+            <p class="text-2xl font-black text-electric-blue">4</p>
+            <p class="text-xs text-gray-500 mt-0.5">En producción</p>
+          </div>
+          <div class="w-px bg-gray-800 hidden sm:block"></div>
+          <div class="text-center">
+            <p class="text-2xl font-black text-electric-blue">3+</p>
+            <p class="text-xs text-gray-500 mt-0.5">Años desarrollando</p>
+          </div>
+          <div class="w-px bg-gray-800 hidden sm:block"></div>
+          <div class="text-center">
+            <p class="text-2xl font-black text-electric-blue">GDG</p>
+            <p class="text-xs text-gray-500 mt-0.5">Tarija Member</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <div
+          class="group p-5 bg-gray-900/50 border border-gray-800 rounded-lg transition-all duration-300 hover:border-electric-blue/40 hover:bg-gray-900/80"
+        >
+          <div class="flex items-start gap-3">
+            <span class="text-electric-blue text-lg mt-0.5">▹</span>
+            <div>
+              <h3 class="text-white font-semibold mb-1">
+                Sistemas en producción
+              </h3>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                El sistema de Importadora Falumar y el ERP de Urban Signs son
+                proyectos reales usados hoy por equipos de trabajo.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="group p-5 bg-gray-900/50 border border-gray-800 rounded-lg transition-all duration-300 hover:border-electric-blue/40 hover:bg-gray-900/80"
+        >
+          <div class="flex items-start gap-3">
+            <span class="text-electric-blue text-lg mt-0.5">▹</span>
+            <div>
+              <h3 class="text-white font-semibold mb-1">
+                Full Stack de verdad
+              </h3>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                Diseño la base de datos, construyo la API REST con Spring Boot o
+                NestJS, y desarrollo el frontend con Angular. End to end.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="group p-5 bg-gray-900/50 border border-gray-800 rounded-lg transition-all duration-300 hover:border-electric-blue/40 hover:bg-gray-900/80"
+        >
+          <div class="flex items-start gap-3">
+            <span class="text-electric-blue text-lg mt-0.5">▹</span>
+            <div>
+              <h3 class="text-white font-semibold mb-1">
+                Comunidad y enseñanza
+              </h3>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                He dado talleres de Firebase con IA, web AR y herramientas de IA
+                aplicada a la educación en DevFest 2025 y otros eventos.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="group p-5 bg-gray-900/50 border border-gray-800 rounded-lg transition-all duration-300 hover:border-electric-blue/40 hover:bg-gray-900/80"
+        >
+          <div class="flex items-start gap-3">
+            <span class="text-electric-blue text-lg mt-0.5">▹</span>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Siempre aprendiendo</h3>
+              <p class="text-sm text-gray-500 leading-relaxed">
+                Cursos de NestJS, pruebas unitarias en Angular, autenticación,
+                Firebase — me mantengo actualizado porque el stack cambia
+                rápido.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes about-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  .about-cursor {
+    display: inline-block;
+    color: #00bfff;
+    animation: about-blink 0.75s step-end infinite;
+    font-weight: 300;
+    margin-left: 1px;
+    transition: opacity 0.4s ease;
+  }
+  .about-cursor.done {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const TEXT = "Sobre Mí";
+  const TYPE_SPEED = 90;
+
+  const el = document.getElementById("about-typewriter")!;
+  const cursor = document.getElementById("about-cursor")!;
+  let typed = false;
+
+  function typeTitle() {
+    if (typed) return;
+    typed = true;
+    let i = 0;
+    function step() {
+      if (i < TEXT.length) {
+        el.textContent = TEXT.slice(0, i + 1);
+        i++;
+        setTimeout(step, TYPE_SPEED);
+      } else {
+        setTimeout(() => cursor.classList.add("done"), 600);
+      }
+    }
+    step();
+  }
+
+  const section = document.getElementById("sobre-mi")!;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        typeTitle();
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.3 },
+  );
+  observer.observe(section);
+</script>

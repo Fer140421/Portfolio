@@ -1,0 +1,55 @@
+/* Tailwind */
+@import "tailwindcss";
+
+/* ─────────────────────────────
+   THEME (Tailwind v4 way)
+───────────────────────────── */
+@theme {
+  /* Colors */
+  --color-deep-black: #0a0a0a;
+  --color-electric-blue: #00bfff;
+
+  /* Shadows */
+  --shadow-electric-glow: 0 0 15px 5px rgba(0, 191, 255, 0.3);
+  --shadow-electric-glow-sm: 0 0 8px 2px rgba(0, 191, 255, 0.2);
+}
+
+/* ─────────────────────────────
+   Global Styles
+───────────────────────────── */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-deep-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-electric-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0099cc;
+}
+
+/* Glow cursor */
+body {
+  cursor:
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="4" fill="%2300BFFF" opacity="0.6"/><circle cx="16" cy="16" r="8" fill="%2300BFFF" opacity="0.3"/><circle cx="16" cy="16" r="12" fill="%2300BFFF" opacity="0.1"/></svg>')
+      16 16,
+    auto;
+}

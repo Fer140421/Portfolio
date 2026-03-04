@@ -1,0 +1,165 @@
+---
+// src/components/TechStack.astro
+
+const categories = [
+  {
+    label: "Lenguajes",
+    technologies: [
+      { name: "Java",       icon: "/tech/java.png"       },
+      { name: "JavaScript", icon: "/tech/javascript.png" },
+      { name: "TypeScript", icon: "/tech/typescript.svg" },
+      { name: "HTML",       icon: "/tech/html.svg"       },
+      { name: "CSS",        icon: "/tech/css.svg"        },
+    ],
+  },
+  {
+    label: "Frontend",
+    technologies: [
+      { name: "Angular",      icon: "/tech/angular.png"   },
+      { name: "Astro",        icon: "/tech/astro.svg"     },
+      { name: "Next.js",      icon: "/tech/next.png"      },
+      { name: "Tailwind CSS", icon: "/tech/Tailwind.png"  },
+      { name: "Bootstrap",    icon: "/tech/Bootstrap.png" },
+    ],
+  },
+  {
+    label: "Backend",
+    technologies: [
+      { name: "Spring Boot", icon: "/tech/spring.svg"   },
+      { name: "Node.js",     icon: "/tech/node.png"     },
+      { name: "Nest.js",     icon: "/tech/nestjs.svg"   },
+      { name: "Firebase",    icon: "/tech/firebase.svg" },
+    ],
+  },
+  {
+    label: "Bases de Datos",
+    technologies: [
+      { name: "PostgreSQL", icon: "/tech/posgres.svg"   },
+      { name: "SQL Server", icon: "/tech/sqlserver.svg" },
+    ],
+  },
+  {
+    label: "Herramientas",
+    technologies: [
+      { name: "Git",     icon: "/tech/git.svg"     },
+      { name: "GitHub",  icon: "/tech/github.png"  },
+      { name: "Docker",  icon: "/tech/docker.png"  },
+      { name: "Postman", icon: "/tech/postman.svg" },
+      { name: "Swagger", icon: "/tech/swagger.svg" },
+    ],
+  },
+];
+
+function initials(name: string) {
+  return name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+}
+---
+
+<section class="py-20 lg:py-32" id="stack">
+  <div class="container mx-auto px-6 lg:px-12 text-center">
+
+    <h2 class="text-3xl lg:text-4xl font-bold text-white mb-16">
+      <span id="stack-typewriter"></span><span id="stack-cursor" class="stack-cursor">▌</span>
+    </h2>
+
+    <div class="flex flex-col gap-12">
+      {categories.map((cat) => (
+        <div>
+          <!-- Separador categoría -->
+          <div class="flex items-center gap-4 mb-8">
+            <div class="h-px flex-1 bg-gray-800"></div>
+            <span class="text-xs font-semibold tracking-widest uppercase text-electric-blue px-3">
+              {cat.label}
+            </span>
+            <div class="h-px flex-1 bg-gray-800"></div>
+          </div>
+
+          <!-- flex wrap centrado: se adapta a cualquier cantidad -->
+          <div class="flex flex-wrap justify-center gap-4">
+            {cat.technologies.map((tech) => (
+              <div class="group flex flex-col items-center justify-center gap-3 p-5 w-28 bg-transparent border border-gray-800 rounded-xl transition-all duration-300 hover:border-electric-blue hover:shadow-electric-glow-sm hover:-translate-y-2">
+
+                <div class="w-10 h-10 flex items-center justify-center">
+                  <img
+                    src={tech.icon}
+                    alt={tech.name}
+                    width="40"
+                    height="40"
+                    class="w-10 h-10 object-contain transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_8px_rgba(0,191,255,0.5)]"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                  />
+                  <div
+                    class="hidden w-10 h-10 items-center justify-center rounded-lg border border-[#00BFFF]/25 bg-[#00BFFF]/10 font-mono text-xs font-bold text-[#00BFFF] transition-all duration-300 group-hover:scale-110"
+                    style="display:none"
+                  >
+                    {initials(tech.name)}
+                  </div>
+                </div>
+
+                <h3 class="text-xs font-bold text-white leading-tight text-center">{tech.name}</h3>
+
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  @keyframes stack-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+  .stack-cursor {
+    display: inline-block;
+    color: #00bfff;
+    animation: stack-blink 0.75s step-end infinite;
+    font-weight: 300;
+    margin-left: 1px;
+    transition: opacity 0.4s ease;
+  }
+  .stack-cursor.done {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const TEXT       = "Stack Tecnológico";
+  const TYPE_SPEED = 90;
+
+  const el     = document.getElementById("stack-typewriter")!;
+  const cursor = document.getElementById("stack-cursor")!;
+  let typed    = false;
+
+  function typeTitle() {
+    if (typed) return;
+    typed = true;
+    let i = 0;
+    function step() {
+      if (i < TEXT.length) {
+        el.textContent = TEXT.slice(0, i + 1);
+        i++;
+        setTimeout(step, TYPE_SPEED);
+      } else {
+        setTimeout(() => cursor.classList.add("done"), 600);
+      }
+    }
+    step();
+  }
+
+  const section = document.getElementById("stack")!;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        typeTitle();
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.2 }
+  );
+  observer.observe(section);
+</script>

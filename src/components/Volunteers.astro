@@ -1,0 +1,219 @@
+---
+// src/components/Volunteers.astro
+
+const volunteers = [
+  {
+    name: "Google Developer Groups Tarija",
+    category: "Tecnología",
+    period: "2024 – Hoy",
+    active: true,
+    cert: "https://drive.google.com/file/d/1WT1UGWjbm_QmFGnOYz7g4PZLJu4mLVWT/view?usp=sharing",
+    items: [
+      "Miembro organizador de DevFest 2024 y 2025",
+      "Líder del equipo de Marketing en DevFest 2024 e IWD 2025",
+      "Participante y organizador de Google I/O Extended 2024 y 2025",
+      "Miembro del equipo de desarrollo",
+      "Alianzas colaborativas con la Sociedad Científica de la UAJMS",
+    ],
+  },
+  {
+    name: "Comunidad Notion Tarija",
+    category: "Tecnología",
+    period: "2025 – Hoy",
+    active: true,
+    cert: "",
+    items: [
+      "Organizer de la comunidad desde 2025",
+      "Gestión y coordinación de actividades de la comunidad",
+    ],
+  },
+  {
+    name: "Consejo Juvenil por la Madre Tierra",
+    category: "Medio Ambiente",
+    period: "2023 – 2024",
+    active: false,
+    cert: "",
+    items: [
+      "Capacitación en temas ambientales y nuevas leyes",
+      "Participación en campañas de reciclaje",
+    ],
+  },
+  {
+    name: "Desafio ODS",
+    category: "Liderazgo",
+    period: "2020 – 2023",
+    active: false,
+    cert: "https://drive.google.com/file/d/13v6HO3ml1RyNClNN5AaXNLg9FRvkkIRL/view?usp=sharing",
+    items: [
+      "Coordinación y liderazgo en talleres educativos",
+      "Recaudación de fondos para proyectos sostenibles",
+      "Participación en proyectos de concientización",
+    ],
+  },
+  {
+    name: "El Refugio",
+    category: "Enseñanza",
+    period: "2019",
+    active: false,
+    cert: "https://drive.google.com/file/d/1xhuSpYYg6tjnOnhNOooyrJTjjSEIn3YH/view?usp=sharing",
+    items: [
+      "Enseñanza pedagógica a niños con dificultades de atención",
+      "Elaboración de material didáctico en matemáticas",
+      "Desarrollo de habilidades de mentoría",
+    ],
+  },
+];
+---
+
+<section class="py-20 lg:py-32" id="voluntariados">
+  <div class="container mx-auto px-4">
+
+    <h2 class="text-3xl lg:text-4xl font-bold text-white mb-16 text-center">
+      <span id="vol-typewriter"></span><span id="vol-cursor" class="vol-cursor">▌</span>
+    </h2>
+
+    <div class="relative max-w-4xl mx-auto">
+
+      <!-- Línea central — solo visible en lg -->
+      <div class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 timeline-line"></div>
+
+      <!-- Línea lateral — visible en móvil -->
+      <div class="lg:hidden absolute left-4 top-0 bottom-0 w-px timeline-line"></div>
+
+      <div class="flex flex-col gap-12">
+        {volunteers.map((vol, i) => (
+          <div class={`relative flex items-start gap-8 ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}>
+
+            <!-- Punto en la línea — desktop -->
+            <div class="hidden lg:flex absolute left-1/2 top-5 -translate-x-1/2 z-10 items-center justify-center">
+              <div class={`w-3 h-3 rounded-full border-2 border-bg-deep ${vol.active ? "bg-emerald-400 dot-pulse-green" : "bg-electric-blue dot-pulse"}`}></div>
+            </div>
+
+            <!-- Punto en la línea — móvil -->
+            <div class="lg:hidden flex-shrink-0 flex flex-col items-center mt-5" style="width:1rem; margin-left:0.1rem;">
+              <div class={`w-3 h-3 rounded-full border-2 border-[#0a0a0a] ${vol.active ? "bg-emerald-400 dot-pulse-green" : "bg-electric-blue dot-pulse"}`}></div>
+            </div>
+
+            <!-- Card — ocupa mitad del ancho en desktop -->
+            <div class={`flex-1 lg:max-w-[calc(50%-2rem)] ${i % 2 === 0 ? "lg:pr-8" : "lg:pl-8"} pl-4 lg:pl-0`}>
+              <div class="group p-5 bg-gray-900/50 border border-gray-800 rounded-xl transition-all duration-300 hover:border-electric-blue/40 hover:bg-gray-900/80 hover:-translate-y-1">
+
+                <!-- Header -->
+                <div class="flex items-start justify-between gap-3 mb-4">
+                  <div>
+                    <span class="text-xs font-semibold tracking-widest uppercase text-electric-blue">{vol.category}</span>
+                    <h3 class="text-white font-bold text-sm lg:text-base mt-1 leading-tight">{vol.name}</h3>
+                  </div>
+                  <span class="text-xs text-gray-600 whitespace-nowrap mt-1 flex-shrink-0">{vol.period}</span>
+                </div>
+
+                <!-- Items -->
+                <ul class="flex flex-col gap-2 mb-4">
+                  {vol.items.map(item => (
+                    <li class="flex items-start gap-2 text-xs text-gray-500 leading-relaxed">
+                      <span class="text-electric-blue/50 flex-shrink-0 mt-0.5">–</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <!-- Footer -->
+                <div class="flex items-center gap-2 pt-3 border-t border-gray-800">
+                  {vol.active ? (
+                    <span class="flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2 py-0.5 rounded-full">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                      Activo
+                    </span>
+                  ) : null}
+                  {vol.cert ? (
+                    <a href={vol.cert} target="_blank" rel="noopener noreferrer"
+                      class="text-xs text-electric-blue bg-electric-blue/10 border border-electric-blue/20 px-2 py-0.5 rounded-full hover:bg-electric-blue/20 transition-colors">
+                      Ver cert.
+                    </a>
+                  ) : (
+                    <span class="text-xs text-gray-600 bg-gray-800/60 border border-gray-700/50 px-2 py-0.5 rounded-full">
+                      Sin cert.
+                    </span>
+                  )}
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Espacio vacío en el lado opuesto — desktop -->
+            <div class="hidden lg:block flex-1"></div>
+
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes vol-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+  .vol-cursor {
+    display: inline-block;
+    color: #00bfff;
+    animation: vol-blink 0.75s step-end infinite;
+    font-weight: 300;
+    margin-left: 1px;
+    transition: opacity 0.4s ease;
+  }
+  .vol-cursor.done {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .timeline-line {
+    background: linear-gradient(to bottom, transparent, #00bfff40, #00bfff40, transparent);
+  }
+
+  @keyframes dot-glow {
+    0%, 100% { box-shadow: 0 0 6px rgba(0, 191, 255, 0.6); }
+    50%       { box-shadow: 0 0 16px rgba(0, 191, 255, 1), 0 0 30px rgba(0, 191, 255, 0.3); }
+  }
+  @keyframes dot-glow-green {
+    0%, 100% { box-shadow: 0 0 6px rgba(52, 211, 153, 0.6); }
+    50%       { box-shadow: 0 0 16px rgba(52, 211, 153, 1), 0 0 30px rgba(52, 211, 153, 0.3); }
+  }
+  .dot-pulse       { animation: dot-glow 2.5s ease-in-out infinite; }
+  .dot-pulse-green { animation: dot-glow-green 2.5s ease-in-out infinite; }
+</style>
+
+<script>
+  const TEXT       = "Voluntariados";
+  const TYPE_SPEED = 90;
+  const el     = document.getElementById("vol-typewriter")!;
+  const cursor = document.getElementById("vol-cursor")!;
+  let typed = false;
+
+  function typeTitle() {
+    if (typed) return;
+    typed = true;
+    let i = 0;
+    function step() {
+      if (i < TEXT.length) {
+        el.textContent = TEXT.slice(0, i + 1);
+        i++;
+        setTimeout(step, TYPE_SPEED);
+      } else {
+        setTimeout(() => cursor.classList.add("done"), 600);
+      }
+    }
+    step();
+  }
+
+  const section = document.getElementById("voluntariados")!;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) { typeTitle(); observer.disconnect(); }
+    },
+    { threshold: 0.2 }
+  );
+  observer.observe(section);
+</script>

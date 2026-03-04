@@ -1,0 +1,422 @@
+---
+// Navbar.astro
+// Uso: import Navbar from '../components/Navbar.astro'; en Layout.astro
+
+const navLinks = [
+  { label: "Inicio", href: "#inicio" },
+  { label: "Sobre mí", href: "#sobre-mi" },
+  { label: "Voluntariados", href: "#voluntariados" },
+  { label: "Stack", href: "#stack" },
+  { label: "Proyectos", href: "#proyectos" },
+  { label: "Educacion", href: "#educacion" },
+  { label: "Contacto", href: "#contacto" },
+];
+
+const AUTHOR_NAME = "BITFUSION";
+---
+
+<header id="navbar">
+  <div class="nav-container">
+    <!-- Logo con typewriter -->
+    <a href="#inicio" class="nav-logo" aria-label="Inicio">
+      <span class="logo-bracket">&lt;</span>
+      <span class="logo-name" id="logo-typewriter"></span>
+      <span id="logo-cursor" class="logo-cursor">▌</span>
+      <span class="logo-bracket" id="logo-close" style="opacity:0">/&gt;</span>
+    </a>
+
+    <!-- Links desktop -->
+    <nav class="nav-links" aria-label="Navegación principal">
+      {
+        navLinks.map((link) => (
+          <a href={link.href} class="nav-link">
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- Botón hamburguesa (móvil) -->
+    <button
+      class="hamburger"
+      id="hamburger-btn"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+
+  <!-- Menú móvil -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav class="mobile-nav" aria-label="Navegación móvil">
+      {
+        navLinks.map((link, i) => (
+          <a
+            href={link.href}
+            class="mobile-link"
+            style={`--delay: ${i * 60}ms`}
+            data-mobile-link
+          >
+            <span class="mobile-link-num">0{i + 1}.</span>
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<style>
+  :root {
+    --electric: #00bfff;
+    --electric-dim: rgba(0, 191, 255, 0.12);
+    --electric-glow: rgba(0, 191, 255, 0.35);
+    --bg-nav: rgba(10, 10, 10, 0.72);
+    --nav-height: 72px;
+    --border-nav: rgba(0, 191, 255, 0.18);
+    --text-muted: rgba(255, 255, 255, 0.55);
+  }
+
+  #navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: var(--bg-nav);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border-bottom: 1px solid var(--border-nav);
+    opacity: 0;
+    transform: translateY(-100%);
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s ease;
+    pointer-events: none;
+  }
+
+  #navbar.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  #navbar.scrolled {
+    box-shadow: 0 4px 32px rgba(0, 191, 255, 0.07);
+  }
+
+  .nav-container {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* ── Logo ── */
+  .nav-logo {
+    font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 0.1em;
+    transition: opacity 0.2s;
+  }
+
+  .nav-logo:hover {
+    opacity: 0.85;
+  }
+
+  .logo-bracket {
+    color: var(--electric);
+    font-weight: 400;
+  }
+
+  .logo-name {
+    color: #fff;
+    margin: 0 0.15em;
+    min-width: 0.5ch;
+  }
+
+  /* ── Cursor del logo ── */
+  @keyframes logo-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .logo-cursor {
+    display: inline-block;
+    color: var(--electric);
+    font-weight: 300;
+    font-size: 0.85em;
+    animation: logo-blink 0.75s step-end infinite;
+    transition: opacity 0.4s ease;
+    margin-right: 0.1em;
+  }
+
+  .logo-cursor.done {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    overflow: hidden;
+  }
+
+  #logo-close {
+    transition: opacity 0.35s ease;
+  }
+
+  /* ── Desktop Links ── */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+  }
+
+  .nav-link {
+    position: relative;
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 450;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    transition:
+      color 0.22s ease,
+      background 0.22s ease,
+      text-shadow 0.22s ease;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 60%;
+    height: 1.5px;
+    background: var(--electric);
+    border-radius: 99px;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .nav-link:hover {
+    color: var(--electric);
+    background: var(--electric-dim);
+    text-shadow: 0 0 12px var(--electric-glow);
+  }
+
+  .nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  /* ── Hamburger ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+    background: transparent;
+    border: 1px solid var(--border-nav);
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+      border-color 0.2s,
+      background 0.2s;
+  }
+
+  .hamburger:hover {
+    border-color: var(--electric);
+    background: var(--electric-dim);
+  }
+
+  .bar {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: #fff;
+    border-radius: 99px;
+    transition:
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+      opacity 0.2s;
+    transform-origin: center;
+  }
+
+  .hamburger[aria-expanded="true"] .bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .hamburger[aria-expanded="true"] .bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .hamburger[aria-expanded="true"] .bar:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* ── Mobile Menu ── */
+  .mobile-menu {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    border-top: 1px solid transparent;
+  }
+
+  .mobile-menu.open {
+    max-height: 420px;
+    border-top-color: var(--border-nav);
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 1.5rem 1.25rem;
+    gap: 0.1rem;
+  }
+
+  .mobile-link {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: "Inter", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 450;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.7rem 0.5rem;
+    border-radius: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+      color 0.22s ease,
+      background 0.22s ease,
+      text-shadow 0.22s ease,
+      opacity 0.3s ease var(--delay, 0ms),
+      transform 0.3s ease var(--delay, 0ms);
+  }
+
+  .mobile-menu.open .mobile-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-link:hover {
+    color: var(--electric);
+    background: var(--electric-dim);
+    text-shadow: 0 0 10px var(--electric-glow);
+  }
+
+  .mobile-link-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--electric);
+    opacity: 0.7;
+    min-width: 1.4rem;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    .hamburger {
+      display: flex;
+    }
+  }
+</style>
+
+<script define:vars={{ AUTHOR_NAME }}>
+  const btn = document.getElementById("hamburger-btn");
+  const menu = document.getElementById("mobile-menu");
+  const navbar = document.getElementById("navbar");
+  const links = document.querySelectorAll("[data-mobile-link]");
+  const logoEl = document.getElementById("logo-typewriter");
+  const logoCursor = document.getElementById("logo-cursor");
+  const logoClose = document.getElementById("logo-close");
+
+  // ── Menú móvil ────────────────────────────────────────
+  btn.addEventListener("click", () => {
+    const isOpen = menu.classList.toggle("open");
+    btn.setAttribute("aria-expanded", String(isOpen));
+    menu.setAttribute("aria-hidden", String(!isOpen));
+  });
+
+  links.forEach((link) => {
+    link.addEventListener("click", () => {
+      menu.classList.remove("open");
+      btn.setAttribute("aria-expanded", "false");
+      menu.setAttribute("aria-hidden", "true");
+    });
+  });
+
+  // ── Scroll: mostrar/ocultar navbar ────────────────────
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (window.scrollY > 60) {
+        navbar.classList.add("visible");
+        navbar.classList.toggle("scrolled", window.scrollY > 80);
+      } else {
+        navbar.classList.remove("visible", "scrolled");
+      }
+    },
+    { passive: true },
+  );
+
+  // ── Typewriter del logo (se ejecuta una sola vez) ─────
+  let typed = false;
+
+  function typeLogo() {
+    if (typed) return;
+    typed = true;
+
+    let i = 0;
+    const TYPE_SPEED = 110; // ms por carácter
+
+    function step() {
+      if (i < AUTHOR_NAME.length) {
+        logoEl.textContent = AUTHOR_NAME.slice(0, i + 1);
+        i++;
+        setTimeout(step, TYPE_SPEED);
+      } else {
+        // Ocultar cursor y revelar el cierre "/>"
+        setTimeout(() => {
+          logoCursor.classList.add("done");
+          logoClose.style.opacity = "1";
+        }, 350);
+      }
+    }
+
+    // Pequeño delay para que coincida con la animación de entrada del navbar
+    setTimeout(step, 200);
+  }
+
+  // Disparar el typewriter cuando el navbar se hace visible
+  const observer = new MutationObserver(() => {
+    if (navbar.classList.contains("visible")) {
+      typeLogo();
+    }
+  });
+
+  observer.observe(navbar, { attributes: true, attributeFilter: ["class"] });
+</script>
