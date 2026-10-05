@@ -31,19 +31,28 @@
           colaborado con otros desarrolladores de la región.
         </p>
 
-        <div class="mt-8 flex flex-wrap justify-center lg:justify-start gap-6">
+        <div
+          id="about-stats"
+          class="mt-8 flex flex-wrap justify-center lg:justify-start gap-6 opacity-0 translate-y-3 transition-all duration-700 ease-out"
+        >
           <div class="text-center">
-            <p class="text-2xl font-black text-electric-blue">8+</p>
+            <p class="text-2xl font-black text-electric-blue">
+              <span class="stat-number" data-target="8" data-suffix="+">0+</span>
+            </p>
             <p class="text-xs text-gray-500 mt-0.5">Proyectos</p>
           </div>
           <div class="w-px bg-gray-800 hidden sm:block"></div>
           <div class="text-center">
-            <p class="text-2xl font-black text-electric-blue">4</p>
+            <p class="text-2xl font-black text-electric-blue">
+              <span class="stat-number" data-target="4" data-suffix="">0</span>
+            </p>
             <p class="text-xs text-gray-500 mt-0.5">En producción</p>
           </div>
           <div class="w-px bg-gray-800 hidden sm:block"></div>
           <div class="text-center">
-            <p class="text-2xl font-black text-electric-blue">3+</p>
+            <p class="text-2xl font-black text-electric-blue">
+              <span class="stat-number" data-target="3" data-suffix="+">0+</span>
+            </p>
             <p class="text-xs text-gray-500 mt-0.5">Años desarrollando</p>
           </div>
           <div class="w-px bg-gray-800 hidden sm:block"></div>
@@ -174,11 +183,54 @@
     step();
   }
 
+  let statsAnimated = false;
+  function animateCounters() {
+    if (statsAnimated) return;
+    statsAnimated = true;
+
+    const statsContainer = document.getElementById("about-stats");
+    if (statsContainer) {
+      statsContainer.classList.remove("opacity-0", "translate-y-3");
+      statsContainer.classList.add("opacity-100", "translate-y-0");
+    }
+
+    const counters = document.querySelectorAll<HTMLElement>(".stat-number");
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    counters.forEach((counter) => {
+      const target = parseInt(counter.dataset.target || "0", 10);
+      const suffix = counter.dataset.suffix || "";
+      if (isNaN(target)) return;
+
+      if (prefersReducedMotion) {
+        counter.textContent = `${target}${suffix}`;
+        return;
+      }
+
+      const duration = 800;
+      const stepTime = Math.max(30, Math.floor(duration / target));
+      let current = 0;
+      counter.textContent = `0${suffix}`;
+
+      const timer = setInterval(() => {
+        current++;
+        counter.textContent = `${current}${suffix}`;
+        if (current >= target) {
+          counter.textContent = `${target}${suffix}`;
+          clearInterval(timer);
+        }
+      }, stepTime);
+    });
+  }
+
   const section = document.getElementById("sobre-mi")!;
   const observer = new IntersectionObserver(
     (entries) => {
       if (entries[0].isIntersecting) {
         typeTitle();
+        animateCounters();
         observer.disconnect();
       }
     },
